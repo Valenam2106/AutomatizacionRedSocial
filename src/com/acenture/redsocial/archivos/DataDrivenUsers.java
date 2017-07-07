@@ -1,7 +1,9 @@
 package com.acenture.redsocial.archivos;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -66,6 +68,30 @@ public class DataDrivenUsers {
 		         workbook.write(fos); 
 		         fos.close(); 
 		}
+	
+	public void setPassword(){
+		
+		String sheetName = "Sheet1"; 
+		 
+        sheet = workbook.getSheet(sheetName); 
+        row = sheet.getRow(1); 
+        cell = row.createCell(1); 
+        cell.setCellValue("123456789abc"); 
+          
+        FileOutputStream fos;
+		try {
+			fos = new FileOutputStream("C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx");
+			workbook.write(fos); 
+	        fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+         
+	}
 
 	
 

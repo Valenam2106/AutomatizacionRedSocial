@@ -122,6 +122,7 @@ public class test_facebook {
 
 						WebElement passInc = driver.findElementById("com.facebook.katana:id/friend_requests_tab");
 						System.out.println("Contraseña correcta");
+						
 
 					} catch (Exception e) {
 						sw = false;

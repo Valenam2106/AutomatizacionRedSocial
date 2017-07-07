@@ -10,6 +10,7 @@ import io.appium.java_client.android.AndroidDeviceActionShortcuts;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 
+import org.apache.xalan.xsltc.compiler.sym;
 import org.junit.Assert;
 import org.junit.rules.ExpectedException;
 import org.testng.annotations.BeforeClass;
@@ -38,7 +39,7 @@ import org.testng.annotations.AfterTest;
 
 public class test_facebook {
 
-	int row;
+	int row =1;
 	boolean sw;
 	String status;
 
@@ -62,7 +63,7 @@ public class test_facebook {
 		capabilities.setCapability("autoDismissAlerts", true);
 
 		driver = new AndroidDriver<WebElement>(new URL(URL), capabilities);
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
 
 	}
 
@@ -74,157 +75,159 @@ public class test_facebook {
 
 	@Test
 	public void mytest() throws InterruptedException {
+
+		Credenciales cre = new Credenciales();
 		// Objeto de a clase WebDriverWait que sirve para esperar 20 segundos o
 		// lo que sea necesario para esperar que
 		// La pagina cargue
-		try {
-			Credenciales cre = new Credenciales();
-			WebDriverWait wait = new WebDriverWait(driver, 20);
-			row = 0;
-			DataDrivenUsers dataDrivenUsers = new DataDrivenUsers(
-					"C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx");
-			cre = dataDrivenUsers.getCellData(row);
-			do {
-				status = "Success";
+		
+		do {
+			try {
+
+				WebDriverWait wait = new WebDriverWait(driver, 20);
+
 				sw = true;
+				System.out.println("Sw en true");
+
+				status = "Success";
+				System.out.println("status success");
+
+				System.out.println("Usuario: " + row);
+				// El assert ingresa a la aplicacion por 1 segundo
+				
+				Assert.assertNotNull(driver.getContext());
+				Thread.sleep(1000);
+
+				DataDrivenUsers dataDriveUsers = new DataDrivenUsers(
+						"C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx");
+
+				// Se obtienen la cantidad de filas
+				cre = dataDriveUsers.getCellData(row);
+
+				// se da click en el correo electronico y luego se le manda
+				// el correo
+				WebElement user = driver.findElement(By.id("com.facebook.katana:id/login_username"));
+				user.click();				
+				// user.sendKeys("uditeamacn2@gmail.com");
+				user.sendKeys(cre.getUser());
+				Thread.sleep(1000);
+				System.out.println("Correo electronico ingresado: "+cre.getUser());
+
+				// se da click en el boton contraseña y se ingresa la
+				// contraseña del correo
+				WebElement pass = driver.findElement(By.id("com.facebook.katana:id/login_password"));
+				pass.click();
+				// pass.sendKeys("123456789abc");
+				pass.sendKeys(cre.getPass());
+				Thread.sleep(1000);
+				System.out.println("Contraseña ingresada: "+cre.getPass());
+				//
+
+				// se inicia sesion en facebook
+				WebElement boton = driver.findElement(By.id("com.facebook.katana:id/login_login"));
+				boton.click();
+				Thread.sleep(1000);
+				System.out.println("Boton de ingreso");
+
 				try {
+					List<WebElement> passInc = driver.findElements(By.id("com.facebook.katana:id/button1"));
 
-					row = cre.getNumRow();
-					// El assert ingresa a la aplicacion por 1 segundo
-					Assert.assertNotNull(driver.getContext());
-
-					Thread.sleep(1000);
-
-					// se da click en el correo electronico y luego se le manda
-					// el correo
-					WebElement user = driver.findElement(By.id("com.facebook.katana:id/login_username"));
-					user.click();
-					// user.sendKeys("uditeamacn2@gmail.com");
-					user.sendKeys(cre.getUser());
-					Thread.sleep(1000);
-					System.out.println("Correo electronico ingresado:" + cre.getUser());
-
-					// se da click en el boton contraseña y se ingresa la
-					// contraseña del correo
-					WebElement pass = driver.findElement(By.id("com.facebook.katana:id/login_password"));
-					pass.click();
-					// pass.sendKeys("123456789abc");
-					pass.sendKeys(cre.getPass());
-					Thread.sleep(1000);
-					System.out.println("Contraseña ingresada" + cre.getPass());
-
-					// se inicia sesion en facebook
-					WebElement boton = driver.findElement(By.id("com.facebook.katana:id/login_login"));
-					boton.click();
-					Thread.sleep(1000);
-					System.out.println("Boton de ingreso");
-					try {
-
-						WebElement passInc = driver.findElementById("com.facebook.katana:id/friend_requests_tab");
-						System.out.println("Contraseña correcta");
+					if (passInc.size() > 0) {
+						System.out.println("Usuario/Contraseña incorrecto");
+						((AndroidDeviceActionShortcuts) driver).pressKeyCode(AndroidKeyCode.BACK);
 						
-
-					} catch (Exception e) {
+						//user.clear();
+						System.out.println("Click Ok");
 						sw = false;
-						status = "default";
-						
-						((AndroidDeviceActionShortcuts) driver).pressKeyCode(AndroidKeyCode.BACK);
-						((AndroidDeviceActionShortcuts) driver).pressKeyCode(AndroidKeyCode.BACK);
-						Assert.assertNotNull(driver.getContext());
-						System.out.println("Status default");
+						System.out.println("Sw se pone en falso");												
+						status ="default";
 						
 					}
-
-					if (sw) {
-
-						// wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']")));
-						//
-						// WebElement estado =
-						// driver.findElement(By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']"));
-						// estado.click();
-						// Thread.sleep(2000);
-						// System.out.println("Selecciona estado");
-						//
-						//
-						// WebElement btnGif =
-						// driver.findElement(By.xpath("//android.view.ViewGroup
-						// [@bounds='[0,1668][1080,1812]']"));
-						// btnGif.click();
-						// Thread.sleep(3000);
-						// System.out.println("Click para elegir gif ");
-						//
-						//
-						// WebElement gif =
-						// driver.findElement(By.xpath("//android.widget.ImageView
-						// [@bounds='[6,369][537,897]']"));
-						// gif.click();
-						// Thread.sleep(7000);
-						// System.out.println("Gif elegido listo para
-						// publicar");
-						//
-						//
-						// WebElement btnPub =
-						// driver.findElement(By.id("com.facebook.katana:id/primary_named_button"));
-						// btnPub.click();
-						// Thread.sleep(3000);
-						// System.out.println("Publica gift");
-
-						// SALIR DE FACEBOOK
-
-						WebElement opc = driver.findElement(By.id("com.facebook.katana:id/bookmarks_tab"));
-						opc.click();
-						Thread.sleep(8000);
-						System.out.println("Ingresa a las opciones ");
-
-						driver.swipe(500, 1737, 500, 228, 1000);
-						driver.swipe(500, 1737, 500, 228, 1000);
-						driver.swipe(500, 1737, 500, 228, 1000);
-						driver.swipe(500, 1737, 500, 228, 1000);
-						System.out.println("Scroll");
-
-						WebElement offbtn = driver.findElement(By.xpath(
-								"//com.facebook.fbui.widget.contentview.ContentView [@bounds='[0,1644][1080,1812]']"));
-						offbtn.click();
-						Thread.sleep(3000);
-						System.out.println("Click en cerrar sesión");
-
-						WebElement btnoff = driver.findElement(By.id("com.facebook.katana:id/button1"));
-						btnoff.click();
-						Thread.sleep(4000);
-						System.out.println("Click confirmar cerrar sesión");
-
-						// TouchAction touchAction = new TouchAction(driver);
-						// touchAction.tap(300, 200).perform();
-
-						((AndroidDeviceActionShortcuts) driver).pressKeyCode(AndroidKeyCode.BACK);
-
-						System.out.println("Click al volver");
-
-						WebElement newCuenta = driver
-								.findElement(By.id("com.facebook.katana:id/login_add_account_group"));
-						newCuenta.click();
-						Thread.sleep(4000);
-						System.out.println("Nueva cuenta");
-
-					}
-
-					System.out.println("Actualiza status");
-
-					dataDrivenUsers.setStatus(row,
-							"C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx", status);
-
 				} catch (Exception e) {
-
-					//e.printStackTrace();
-					System.out.print("\n\t Se presento Excepción " + e);
+					System.out.println("Seguir");
 				}
 
-				row++;
-				cre = dataDrivenUsers.getCellData(row);
-			} while (cre != null);
-		} catch (Exception e) {
-			System.out.print("\n\t Se presento Excepción " + e);
-		}
+				if (sw == true) {
+//					wait.until(ExpectedConditions.presenceOfElementLocated(
+//							By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']")));
+//
+//					WebElement estado = driver
+//							.findElement(By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']"));
+//					estado.click();
+//					Thread.sleep(2000);
+//					System.out.println("Selecciona estado");
+//
+//					WebElement btnGif = driver
+//							.findElement(By.xpath("//android.view.ViewGroup[@bounds='[0,1668][1080,1812]']"));
+//					btnGif.click();
+//					Thread.sleep(3000);
+//					System.out.println("Click para elegir gif ");
+//
+//					WebElement gif = driver
+//							.findElement(By.xpath("//android.widget.ImageView[@bounds='[6,369][537,897]']"));
+//					gif.click();
+//					Thread.sleep(7000);
+//					System.out.println("Gif elegido listo para publicar");
+//
+//					WebElement btnPub = driver.findElement(By.id("com.facebook.katana:id/primary_named_button"));
+//					btnPub.click();
+//					Thread.sleep(3000);
+//					System.out.println("Publica gift");
+
+					// SALIR DE FACEBOOK
+
+					WebElement opc = driver.findElement(By.id("com.facebook.katana:id/bookmarks_tab"));
+					opc.click();
+					Thread.sleep(3000);
+					System.out.println("Ingresa a las opciones ");
+
+					driver.swipe(500, 1737, 500, 228, 1000);
+					driver.swipe(500, 1737, 500, 228, 1000);
+					driver.swipe(500, 1737, 500, 228, 1000);
+					driver.swipe(500, 1737, 500, 228, 1000);
+					System.out.println("Scroll");
+
+					WebElement offbtn = driver.findElement(By.xpath(
+							"//com.facebook.fbui.widget.contentview.ContentView [@bounds='[0,1644][1080,1812]']"));
+					offbtn.click();
+					Thread.sleep(3000);
+					System.out.println("Click en cerrar sesión");
+
+					WebElement btnoff = driver.findElement(By.id("com.facebook.katana:id/button1"));
+					btnoff.click();
+					Thread.sleep(5000);
+					System.out.println("Click confirmar cerrar sesión");
+
+					 wait.until(ExpectedConditions
+					 .presenceOfElementLocated(By.id("com.facebook.katana:id/login_add_account_group")));
+
+//					((AndroidDeviceActionShortcuts) driver).pressKeyCode(AndroidKeyCode.BACK);
+
+					System.out.println("Click al volver");
+
+					WebElement newCuenta = driver.findElement(By.id("com.facebook.katana:id/login_add_account_group"));
+					newCuenta.click();
+					Thread.sleep(4000);
+					System.out.println("Nueva cuenta");
+				}
+
+				System.out.println("Terminado, escribe en excel");
+
+				dataDriveUsers.setStatus(row,
+						"C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx",
+						status);
+				
+		
+				
+			} catch (Exception e) {
+
+				// e.printStackTrace();
+				System.out.print("\n\t Se presento Excepción " + e);
+			}
+			row++;
+		} while (cre != null);
+		
+
 	}
 
 }

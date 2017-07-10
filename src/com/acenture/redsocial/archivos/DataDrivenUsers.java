@@ -50,7 +50,7 @@ public class DataDrivenUsers {
 			return credencial;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("fin");
 			return null;
 		}
 	}
@@ -74,8 +74,8 @@ public class DataDrivenUsers {
 		String sheetName = "Sheet1"; 
 		 
         sheet = workbook.getSheet(sheetName); 
-        row = sheet.getRow(1); 
-        cell = row.createCell(1); 
+        row = sheet.getRow(0); 
+        cell = row.createCell(4); 
         cell.setCellValue("123456789abc"); 
           
         FileOutputStream fos;

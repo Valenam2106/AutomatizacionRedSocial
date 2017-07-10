@@ -55,6 +55,7 @@ public class test_facebook {
 		String activityname = "com.facebook.katana.LoginActivity";
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("deviceName", "Name");
+		//capabilities.setCapability("udid", "192.168.3.142:5556");
 		capabilities.setCapability("udid", "46X4C16A19006995");
 		capabilities.setCapability("platformVersion", "6.0");
 		capabilities.setCapability("platformName", "Android");
@@ -63,7 +64,7 @@ public class test_facebook {
 		capabilities.setCapability("autoDismissAlerts", true);
 
 		driver = new AndroidDriver<WebElement>(new URL(URL), capabilities);
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
 	}
 
@@ -71,6 +72,7 @@ public class test_facebook {
 	public void CleanUpAppium() {
 
 		driver.quit();
+
 	}
 
 	@Test
@@ -113,14 +115,22 @@ public class test_facebook {
 				// Se obtienen la cantidad de filas
 
 				cre = dataDriveUsers.getCellData(row);
-
+				
+				if(cre==null) break;
+				
 				// se da click en el correo electronico y luego se le manda
 				// el correo
 				WebElement user = verificarInterfaz(By.id("com.facebook.katana:id/login_username"));
-				if (user == null) {
-					user = verificarInterfaz(By.xpath("//android.widget.EditText[@bounds='[96,881][984,1014]']"));
-				}
-				//h();//@bounds='[96,881][984,1014]' or //android.widget.EditText[@bounds='[96,885][984,1018]]"
+
+				// if (user == null) {
+				// user =
+				// verificarInterfaz(By.xpath("//android.widget.EditText[@bounds='[96,881][984,1014]']"));
+				// }
+
+				boolean var = false;
+
+				// h();//@bounds='[96,881][984,1014]' or
+				// //android.widget.EditText[@bounds='[96,885][984,1018]]"
 				user.click();
 				// user.sendKeys("uditeamacn2@gmail.com");
 				user.sendKeys(cre.getUser());
@@ -140,55 +150,67 @@ public class test_facebook {
 				// se inicia sesion en facebook
 				WebElement boton = driver.findElement(By.id("com.facebook.katana:id/login_login"));
 				boton.click();
-				Thread.sleep(1000);
 				System.out.println("Boton de ingreso");
 
-				try {
-					
-					WebElement credencialesInvalidas = verificarInterfaz(By.id("com.facebook.katana:id/button1"));
-					
-					if (credencialesInvalidas != null) {
-						System.out.println("Usuario/Contraseña incorrecto");
-						((AndroidDeviceActionShortcuts) driver).pressKeyCode(AndroidKeyCode.BACK);
-
-						// user.clear();
-						System.out.println("Click Ok");
-						sw = false;
-						System.out.println("Sw se pone en falso");
-						status = "default";
-					}
-					
-				} catch (Exception e) {
-					System.out.println("Seguir");
+				if (verificarInterfaz(By.id("com.facebook.katana:id/button1")) != null) {
+					// login incorrecto
+					driver.findElement(By.id("com.facebook.katana:id/button1")).click();
+					driver.resetApp();
+					status = "default";
+					dataDriveUsers.setStatus(row,
+							"C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx", status);
+					row++;
+					continue;
 				}
 
+				// try {
+				//
+				// WebElement credencialesInvalidas =
+				// verificarInterfaz(By.id("com.facebook.katana:id/button1"));
+				//
+				// if (credencialesInvalidas != null) {
+				// System.out.println("Usuario/Contraseña incorrecto");
+				// ((AndroidDeviceActionShortcuts)
+				// driver).pressKeyCode(AndroidKeyCode.BACK);
+				//
+				// // user.clear();
+				// System.out.println("Click Ok");
+				// sw = false;
+				// System.out.println("Sw se pone en falso");
+				// status = "default";
+				// }
+				//
+				// } catch (Exception e) {
+				// System.out.println("Seguir");
+				// }
+
 				if (sw == true) {
-					// wait.until(ExpectedConditions.presenceOfElementLocated(
-					// By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']")));
+					wait.until(ExpectedConditions.presenceOfElementLocated(
+					 By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']")));
 					//
-					// WebElement estado = driver
-					// .findElement(By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']"));
-					// estado.click();
-					// Thread.sleep(2000);
-					// System.out.println("Selecciona estado");
+					WebElement estado = driver
+					.findElement(By.xpath("//android.view.ViewGroup[@bounds='[0,650][1080,890]']"));
+					estado.click();
+					Thread.sleep(2000);
+					System.out.println("Selecciona estado");
 					//
-					// WebElement btnGif = driver
-					// .findElement(By.xpath("//android.view.ViewGroup[@bounds='[0,1668][1080,1812]']"));
-					// btnGif.click();
-					// Thread.sleep(3000);
-					// System.out.println("Click para elegir gif ");
+					WebElement btnGif = driver
+					.findElement(By.xpath("//android.view.ViewGroup[@bounds='[0,1668][1080,1812]']"));
+					btnGif.click();
+					Thread.sleep(3000);
+					System.out.println("Click para elegir gif ");
 					//
-					// WebElement gif = driver
-					// .findElement(By.xpath("//android.widget.ImageView[@bounds='[6,369][537,897]']"));
-					// gif.click();
-					// Thread.sleep(7000);
-					// System.out.println("Gif elegido listo para publicar");
+					WebElement gif = driver
+					.findElement(By.xpath("//android.widget.ImageView[@bounds='[6,369][537,897]']"));
+					gif.click();
+					Thread.sleep(7000);
+					System.out.println("Gif elegido listo para publicar");
 					//
-					// WebElement btnPub =
-					// driver.findElement(By.id("com.facebook.katana:id/primary_named_button"));
-					// btnPub.click();
-					// Thread.sleep(3000);
-					// System.out.println("Publica gift");
+					WebElement btnPub =
+					driver.findElement(By.id("com.facebook.katana:id/primary_named_button"));
+					btnPub.click();
+					Thread.sleep(3000);
+					System.out.println("Publica gift");
 
 					// SALIR DE FACEBOOK
 
@@ -243,15 +265,28 @@ public class test_facebook {
 
 	}
 
-	private WebElement verificarInterfaz(By by){
-		
+	private WebElement verificarInterfaz(By by) {
+
 		WebElement element = null;
-		
+
 		try {
 			element = driver.findElement(by);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return element;
+	}
+
+	private Boolean verificarInterfazboolean(By by) {
+
+		WebElement element = null;
+
+		try {
+			element = driver.findElement(by);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 }

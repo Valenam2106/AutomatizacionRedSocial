@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="452459" started-at="2017-07-07T20:07:06Z" finished-at="2017-07-07T20:14:39Z">
+  <suite name="Default suite" duration-ms="179686" started-at="2017-07-10T16:14:20Z" finished-at="2017-07-10T16:17:20Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="452459" started-at="2017-07-07T20:07:06Z" finished-at="2017-07-07T20:14:39Z">
+    <test name="Default test" duration-ms="179686" started-at="2017-07-10T16:14:20Z" finished-at="2017-07-10T16:17:20Z">
       <class name="com.accenture.redsocial.test_facebook">
-        <test-method status="PASS" signature="setUpAppium()[pri:0, instance:com.accenture.redsocial.test_facebook@3c0f93f1]" name="setUpAppium" is-config="true" duration-ms="16119" started-at="2017-07-07T15:07:06Z" finished-at="2017-07-07T15:07:22Z">
+        <test-method status="PASS" signature="setUpAppium()[pri:0, instance:com.accenture.redsocial.test_facebook@3c0f93f1]" name="setUpAppium" is-config="true" duration-ms="16524" started-at="2017-07-10T11:14:20Z" finished-at="2017-07-10T11:14:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpAppium -->
-        <test-method status="PASS" signature="mytest()[pri:0, instance:com.accenture.redsocial.test_facebook@3c0f93f1]" name="mytest" duration-ms="432728" started-at="2017-07-07T15:07:22Z" finished-at="2017-07-07T15:14:35Z">
+        <test-method status="PASS" signature="mytest()[pri:0, instance:com.accenture.redsocial.test_facebook@3c0f93f1]" name="mytest" duration-ms="159429" started-at="2017-07-10T11:14:37Z" finished-at="2017-07-10T11:17:16Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- mytest -->
-        <test-method status="PASS" signature="CleanUpAppium()[pri:0, instance:com.accenture.redsocial.test_facebook@3c0f93f1]" name="CleanUpAppium" is-config="true" duration-ms="3573" started-at="2017-07-07T15:14:35Z" finished-at="2017-07-07T15:14:39Z">
+        <test-method status="PASS" signature="CleanUpAppium()[pri:0, instance:com.accenture.redsocial.test_facebook@3c0f93f1]" name="CleanUpAppium" is-config="true" duration-ms="3634" started-at="2017-07-10T11:17:16Z" finished-at="2017-07-10T11:17:20Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- CleanUpAppium -->

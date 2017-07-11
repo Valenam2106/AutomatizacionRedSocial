@@ -20,6 +20,7 @@ public class DataDrivenUsers {
 	public XSSFRow row = null;
 	// public XSSFCol
 	public XSSFCell cell = null;
+	Credenciales credencial = new Credenciales();
 
 	public DataDrivenUsers(String exelfilepath) throws Exception {
 
@@ -30,9 +31,7 @@ public class DataDrivenUsers {
 	}
 
 	public Credenciales getCellData(int rowNum) {
-		int col_Num = -1;
 		try {
-			Credenciales credencial = new Credenciales();
 
 			String sheetName = "Sheet1";
 
@@ -42,8 +41,14 @@ public class DataDrivenUsers {
 			String colName_pass = "";
 
 			row = sheet.getRow(rowNum + 1);
+			System.out.println(rowNum);
+
 			colName_user = row.getCell(0).getStringCellValue();
 			colName_pass = row.getCell(1).getStringCellValue();
+			System.out.println(rowNum);
+			
+			System.out.println(colName_user);
+			System.out.println(colName_pass);
 
 			credencial.setUser(colName_user);
 			credencial.setPass(colName_pass);
@@ -69,29 +74,29 @@ public class DataDrivenUsers {
 		         fos.close(); 
 		}
 	
-	public void setPassword(){
-		
-		String sheetName = "Sheet1"; 
-		 
-        sheet = workbook.getSheet(sheetName); 
-        row = sheet.getRow(0); 
-        cell = row.createCell(4); 
-        cell.setCellValue("123456789abc"); 
-          
-        FileOutputStream fos;
-		try {
-			fos = new FileOutputStream("C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx");
-			workbook.write(fos); 
-	        fos.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-         
-	}
+//	public void setPassword(){
+//		
+//		String sheetName = "Sheet1"; 
+//		 
+//        sheet = workbook.getSheet(sheetName); 
+//        row = sheet.getRow(0); 
+//        cell = row.createCell(4); 
+//        cell.setCellValue("123456789abc"); 
+//          
+//        FileOutputStream fos;
+//		try {
+//			fos = new FileOutputStream("C://Users//Administrator//workspace//TestRedSocial//Credenciales.xlsx");
+//			workbook.write(fos); 
+//	        fos.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+//         
+//	}
 
 	
 
